@@ -25,7 +25,7 @@ class Trade(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=4)
     tax = models.DecimalField(max_digits=12,decimal_places=4)
 
-class PorfolioComp(models.Model):
+class PorftfolioComp(models.Model):
     portifolio = models.ForeignKey(Portfolio, on_delete=models.Case, related_name="portfolio")
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name="assetPortfolio")
     Percentage = models.DecimalField(max_digits=10,decimal_places=4)
