@@ -1,0 +1,15 @@
+{% extends "assets/layout.html" %}
+
+{% block body %}
+    <h1>Assets</h1>
+    <ul>
+        {% for asset in assets %}
+        <li>Asset: {{asset.id}} {{asset.name}} {{asset.sector}} </li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for trade in trades %}
+        <li>Trade: {{trade.ticker}} / {{trade.price}}  {{trade.date}} {{trade.quantity}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
