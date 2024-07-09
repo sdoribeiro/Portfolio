@@ -2,14 +2,21 @@
 
 {% block body %}
     <h1>Assets</h1>
-    <ul>
-        {% for asset in assets %}
-        <li>Asset: {{asset.id}} {{asset.name}} {{asset.sector}} </li>
+    <ol>
+       
+        {% for item in assets %}
+        <li> {{item}} </li>
         {% endfor %}
+        
+    </ol>
+    <h2>Assets</h2>
+    <ul>
+        <li> {{assets}} </li>
     </ul>
+    <h2>Trades</h2>
     <ul>
         {% for trade in trades %}
-        <li>Trade: {{trade.ticker}} / {{trade.price}}  {{trade.date}} {{trade.quantity}}</li>
+        <li>Trade: {{trade.ticker}} / {{trade.price}}  {{trade.date}} {{trade.quantity}} {{trade.operator}}</li>
         {% endfor %}
     </ul>
 {% endblock %}

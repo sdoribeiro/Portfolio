@@ -18,7 +18,7 @@ class Operation(models.Model):
     factor = models.DecimalField(max_digits=8, decimal_places=4)
 
     def __str__(self):
-        return f"{self.name}"
+           return f"{self.factor}"
     
 class Asset(models.Model):
     ticker = models.CharField(max_length=10)
@@ -26,7 +26,7 @@ class Asset(models.Model):
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name="assetSector")
 
     def __str__(self):
-        return f"{self.ticker} - {self.name}"
+        return f"{self.ticker}"
     
 class Trade(models.Model):
     ticker = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name="assetTrade")
@@ -35,6 +35,9 @@ class Trade(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=4)
     tax = models.DecimalField(max_digits=12,decimal_places=4)
     operator = models.ForeignKey(Operation, on_delete= models.CASCADE, related_name="operation")
+
+    def __str__(self):
+        return f"{self.ticker} {self.date} {self.quantity} {self.price} {self.tax} {self.operator}"
 
 class PortfolioComp(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.Case, related_name="portfolio", default=1)
