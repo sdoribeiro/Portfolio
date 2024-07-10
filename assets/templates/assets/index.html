@@ -1,7 +1,7 @@
 {% extends "assets/layout.html" %}
 
 {% block body %}
-    <h1>Assets</h1>
+    <h1>Assets ol </h1>
     <ol>
        
         {% for item in assets %}
@@ -9,9 +9,12 @@
         {% endfor %}
         
     </ol>
-    <h2>Assets</h2>
+    <h2>Assets ul</h2>
     <ul>
-        <li> {{assets}} </li>
+        {% for item in assets %}
+        <li> {{item}} </li>
+        {% endfor %}
+        
     </ul>
     <h2>Trades</h2>
     <ul>
