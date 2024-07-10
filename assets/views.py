@@ -1,11 +1,9 @@
 import yfinance as vf
 import decimal
 import pandas as pd
-import IPython.display as display
 
 from IPython.display import display
 from django.shortcuts import render
-
 from .models import Trade, PortfolioComp, Asset
 
 # Create your views here.
@@ -49,50 +47,34 @@ def index(request):
     class LocalPortifolio:
         def __init__(self,name):
             self.name = name
-            self.composicao = {}
+            self.vlrTotal = 0
             self.dicionario = {"ticker": [],
                                "valor": [],
                                "percRef": [],
                                "percCor": []
                             }
-            self.vlrTotal = 0
+
 
         def add_asset(self, asset):
-            self.composicao[asset.ticker+"%REF"] = asset.percRef
-            self.composicao[asset.ticker] = (asset.price * asset.QtdAsset)
             self.vlrTotal = self.vlrTotal + (asset.price * asset.QtdAsset)
-          
+            self.dicionario["ticker"].append(asset.ticker)
+            self.dicionario["valor"].append(round(asset.price * asset.QtdAsset,2))
+            self.dicionario["percRef"].append(round(asset.percRef,2))          
 
         # Calc percentual do ativo em relacao ao patrimonio total
         def calc_perc(self):
-            aux = {}
-            for x in self.composicao.keys():
-                
-                # selecionar somente as chaves de referencia do asset padrao.
-                if x[len(x)-2:len(x)] == "SA":
-                    ticker = x[0:len(x)-3]
-                    y = ticker+"%Calc"
-                    aux[y]=decimal.Decimal(round((self.composicao[x]/self.vlrTotal)*100,2))
-                    # Rec > 0 buy Rec <0 wait
-                    aux[ticker+"Rec"] = self.composicao[ticker+".SA%REF"] - aux[y]
-            for x in aux.keys():
-                self.composicao[x]=round(aux[x],2)
+
+            for x in self.dicionario["valor"]:
+                self.dicionario["percCor"].append(round(x/self.vlrTotal*100,2))
 
         def show_data(self):
             aux = []
-            for x in self.composicao.keys():
-                if x[len(x)-2:len(x)] == "SA":
-                    ticker = x[0:len(x)-3]
-                    valor = self.composicao[x]
-                    PercRef = self.composicao[x+"%REF"]
-                    PercRec = self.composicao[ticker+"Rec"]
-                    #print (ticker + "|" + str(valor) + "|" + str(PercRef) + "|" + str(PercRec))
-                    a = ticker + "|" + str(valor) + "|" + str(PercRef) + "|" + str(PercRec)
-                    aux.append(a)
+            for x in self.dicionario.keys():
+                aux.append(self.dicionario[x])
             return aux      
                
         def __str__(self):
-            return f"Class Portifolio: {self.name} | {self.vlrTotal} | {self.composicao} "
+            return f"Class Portifolio: {self.name} | {self.vlrTotal} | {self.dicionario} "
         
     portfolio = PortfolioComp.objects.all()
 
@@ -109,14 +91,8 @@ def index(request):
     
     minhacarteira.calc_perc()
     
-    # Testes com pandas
-    dicionario = {"Ticker":['SAPR11', 'ITSA4', 'HGLG11'],
-                  "VlrTotal": [120000, 20000, 40000],
-                  "PercRef" : [40,20,30]}
-    
-    df = pd.DataFrame(dicionario)
+    df = pd.DataFrame(minhacarteira.dicionario)
     display(df)    
-
 
     return render(request, "assets/index.html", {
         "assets": minhacarteira.show_data(),
