@@ -50,13 +50,19 @@ def index(request):
         def __init__(self,name):
             self.name = name
             self.composicao = {}
+            self.dicionario = {"ticker": [],
+                               "valor": [],
+                               "percRef": [],
+                               "percCor": []
+                            }
             self.vlrTotal = 0
 
         def add_asset(self, asset):
             self.composicao[asset.ticker+"%REF"] = asset.percRef
             self.composicao[asset.ticker] = (asset.price * asset.QtdAsset)
             self.vlrTotal = self.vlrTotal + (asset.price * asset.QtdAsset)
-    
+          
+
         # Calc percentual do ativo em relacao ao patrimonio total
         def calc_perc(self):
             aux = {}
