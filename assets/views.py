@@ -1,7 +1,9 @@
 import yfinance as vf
 import decimal
-# import pandas as pd
+import pandas as pd
 import IPython.display as display
+
+from IPython.display import display
 from django.shortcuts import render
 
 from .models import Trade, PortfolioComp, Asset
@@ -16,14 +18,14 @@ def index(request):
             stock_obj = vf.Ticker(ticker)
             self.name = stock_obj.info['shortName']
             self.price = stock_obj.info['currentPrice']
-            self.operations = []
+            self.trades = []
             self.Mprice = 0
             self.QtdAsset = 0
             self.percRef = perc
             self.vlrInvestido = 0
 
         def add_opp(self, operation):
-            self.operations.append(operation)
+            self.trades.append(operation)
             # only calc average price in buy operation
 
             if operation.operator.factor == 1.0000: # buy
@@ -78,7 +80,7 @@ def index(request):
                     valor = self.composicao[x]
                     PercRef = self.composicao[x+"%REF"]
                     PercRec = self.composicao[ticker+"Rec"]
-                    print (ticker + "|" + str(valor) + "|" + str(PercRef) + "|" + str(PercRec))
+                    #print (ticker + "|" + str(valor) + "|" + str(PercRef) + "|" + str(PercRec))
                     a = ticker + "|" + str(valor) + "|" + str(PercRef) + "|" + str(PercRec)
                     aux.append(a)
             return aux      
@@ -100,6 +102,15 @@ def index(request):
         minhacarteira.add_asset(localAsset)
     
     minhacarteira.calc_perc()
+    
+    # Testes com pandas
+    dicionario = {"Ticker":['SAPR11', 'ITSA4', 'HGLG11'],
+                  "VlrTotal": [120000, 20000, 40000],
+                  "PercRef" : [40,20,30]}
+    
+    df = pd.DataFrame(dicionario)
+    display(df)    
+
 
     return render(request, "assets/index.html", {
         "assets": minhacarteira.show_data(),
