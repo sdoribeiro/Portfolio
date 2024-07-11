@@ -14,8 +14,9 @@ def index(request):
             self.ticker = ticker
             # using yfinance to get ticker data
             stock_obj = vf.Ticker(ticker)
-            self.name = stock_obj.info['shortName']
+            self.name = stock_obj.info['shortName'] 
             self.price = stock_obj.info['currentPrice']
+            # final use of yfinance
             self.trades = []
             self.Mprice = 0
             self.QtdAsset = 0
