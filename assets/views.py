@@ -4,7 +4,7 @@ import pandas as pd
 
 from IPython.display import display
 from django.shortcuts import render
-from .models import Trade, PortfolioComp, Asset
+from .models import Trade, PortfolioComp, Asset, LastPrice
 
 # Create your views here.
 def index(request):
@@ -12,16 +12,24 @@ def index(request):
     class LocalAsset:
         def __init__(self, ticker, perc):
             self.ticker = ticker
-            # using yfinance to get ticker data
-            stock_obj = vf.Ticker(ticker)
-            self.name = stock_obj.info['shortName'] 
-            self.price = stock_obj.info['currentPrice']
-            # final use of yfinance
             self.trades = []
             self.Mprice = 0
             self.QtdAsset = 0
             self.percRef = perc
             self.vlrInvestido = 0
+            try:
+                # using yfinance to get ticker data
+                stock_obj = vf.Ticker(ticker)
+                self.name = stock_obj.info['shortName'] 
+                self.price = stock_obj.info['currentPrice']
+                # final use of yfinance 
+            except:
+                x = Asset.objects.get(ticker = self.ticker)
+                print(x.ticker)
+                a = LastPrice.objects.get(ticker = x )
+                print(a.price)
+                self.name = "Unknow"
+                self.price = a.price
 
         def add_opp(self, operation):
             self.trades.append(operation)
@@ -97,5 +105,6 @@ def index(request):
 
     return render(request, "assets/index.html", {
         "assets": minhacarteira.show_data(),
-        "trades": Trade.objects.all()
+        "trades": Trade.objects.all(),
+        "html": df.values
     })

@@ -19,4 +19,12 @@
         <li>Trade: {{trade.ticker}} / {{trade.price}}  {{trade.date}} {{trade.quantity}} {{trade.operator}}</li>
         {% endfor %}
     </ul>
+    <h3>Data Frame</h3>
+    <ul>
+        {% for ix in html %}
+        <li> {{ix }} </li>
+        {% endfor %}
+    </ul>
+
+
 {% endblock %}
