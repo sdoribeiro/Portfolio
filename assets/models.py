@@ -26,7 +26,7 @@ class Asset(models.Model):
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name="assetSector")
 
     def __str__(self):
-        return f"{self.ticker}"
+        return f"{self.id} {self.ticker}"
     
 class Trade(models.Model):
     ticker = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name="assetTrade")
@@ -46,3 +46,11 @@ class PortfolioComp(models.Model):
 
     def __str__(self):
         return f"{self.id} : {self.portfolio} {self.asset} - {self.percentage}"
+
+class LastPrice(models.Model):
+    ticker = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name="assetPrice")
+    date = models.DateField()
+    price = models.DecimalField(max_digits=12, decimal_places=4)
+
+    def __str__(self):
+        return f"{self.id} {self.ticker} {self.date} {self.price}"
