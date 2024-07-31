@@ -9,16 +9,25 @@
         </div>
     </div>
 
+    <ol>
+       
+        {% for item in assets %}
+        <li> {{item}} </li>
+        {% endfor %}
+        
+    </ol>
+
     <script>
         const ctx = document.getElementById('myChart');
-      
+        /* 22:11 */
         new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['SAPR', 'HGLG', 'MRVE', 'ITSA', 'ABV3', 'IRDM','KNRI', 'HGRE'],
             datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
+              label: '% portfolio',
+              data: [21.64, 36.25, 0.97, 7.94, 7.75, 12.67, 11.25, 1.53],
+             
               borderWidth: 3,
               backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -27,7 +36,8 @@
               'rgba(75, 192, 192, 0.2)',
               'rgba(54, 162, 235, 0.2)',
               'rgba(153, 102, 255, 0.2)',
-              'rgba(201, 203, 207, 0.2)'
+              'rgba(201, 203, 207, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
             ],
             borderColor: [
                 'rgb(255, 99, 132)',
@@ -36,7 +46,8 @@
                 'rgb(75, 192, 192)',
                 'rgb(54, 162, 235)',
                 'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
+                'rgb(201, 203, 207)',
+                'rgb(255, 99, 132)'
                 ]
            
             }]
@@ -64,28 +75,12 @@
                 headings: ["Id","Asset","Price", "Date", "Quantity", "Factor"]
             }
         })
-        dataTable.rows.add(
-            ["1","SAPR11.SA","24.60","12/21/2024","300","1"]
-        )
-        dataTable.rows.add([trades])
-                            
-       // {% for trade in trades %}
-       //    dataTable.rows.add({{trade}}
-             
-             //   [{{trade.price}}, {{trade.date}}, {{trade.quantity}}, {{trade.operator}}]
-
-        //   )
-        //{% endfor %}
-                
+        {% for trade in trades %}
+            dataTable.rows.add([ "{{trade.id}}", "{{trade.ticker}}", "{{trade.price}}", "12/21/2024", "{{trade.quantity}}", "{{trade.operator}}"])
+        {% endfor %}
     </script>
       
-    <ol>
-       
-        {% for item in assets %}
-        <li> {{item}} </li>
-        {% endfor %}
-        
-    </ol>
+  
     <h2>Assets ul</h2>
     <ul>
         {% for item in assets %}
@@ -93,16 +88,10 @@
         {% endfor %}
         
     </ul>
-    <h2>Trades</h2>
-    <ul>
-        {% for trade in trades %}
-        <li>Trade: {{trade.ticker}} / {{trade.price}}  {{trade.date}} {{trade.quantity}} {{trade.operator}}</li>
-        {% endfor %}
-    </ul>
     <h3>Data Frame</h3>
     <ul>
         {% for ix in html %}
-        <li> {{ix }} </li>
+        <li> {{ix}} </li>
         {% endfor %}
     </ul>
 
