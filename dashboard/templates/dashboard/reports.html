@@ -1,0 +1,13 @@
+{% extends "dashboard/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="m-3">
+        <h1 class="my-3">Most Watched Videos</h1>
+        <table id="datatable"> </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static '/dashboard/js/reports.js' %}"></script>
+{% endblock scripts %}

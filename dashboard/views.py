@@ -6,3 +6,9 @@ def index(request):
     return render(request,"dashboard/dashboard.html", {
         
     })
+
+
+def reports(request):
+    return render(request,"dashboard/reports.html", {
+        
+    })

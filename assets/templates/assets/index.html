@@ -9,14 +9,6 @@
         </div>
     </div>
 
-    <ol>
-       
-        {% for item in assets %}
-        <li> {{item}} </li>
-        {% endfor %}
-        
-    </ol>
-
     <script>
         const ctx = document.getElementById('myChart');
         /* 22:11 */
@@ -24,8 +16,9 @@
           type: 'bar',
           data: {
             labels: ['SAPR', 'HGLG', 'MRVE', 'ITSA', 'ABV3', 'IRDM','KNRI', 'HGRE'],
-            datasets: [{
-              label: '% portfolio',
+            datasets: [
+            {
+              label: '% Atual',
               data: [21.64, 36.25, 0.97, 7.94, 7.75, 12.67, 11.25, 1.53],
              
               borderWidth: 3,
@@ -50,7 +43,34 @@
                 'rgb(255, 99, 132)'
                 ]
            
-            }]
+            },
+            {
+                label: '% Plan',
+                data: [40, 10, 10, 10, 30, 10, 10, 10],
+               
+                borderWidth: 3,
+                backgroundColor: [
+                'rgba(75, 99, 192, 0.2)',
+                'rgba(75, 99, 192, 0.2)',
+                'rgba(75, 99, 192, 0.2)',
+                'rgba(75, 99, 192, 0.2)',
+                'rgba(75, 99, 192, 0.2)',
+                'rgba(75, 99, 192, 0.2)',
+                'rgba(75, 99, 192, 0.2)',
+                'rgba(75, 99, 192, 0.2)'
+              ],
+              borderColor: [
+                'rgba(75, 99, 192, 1.2)',
+                'rgba(75, 99, 192, 1.2)',
+                'rgba(75, 99, 192, 1.2)',
+                'rgba(75, 99, 192, 1.2)',
+                'rgba(75, 99, 192, 1.2)',
+                'rgba(75, 99, 192, 1.2)',
+                'rgba(75, 99, 192, 1.2)',
+                'rgba(75, 99, 192, 1.2)'
+                  ]
+             
+              }]
           },
           options: {
             scales: {
@@ -63,7 +83,7 @@
     </script>
 
     <div class="container">
-        <h1>My Trades</h1>
+        <h1>Trades</h1>
         <table id="myTrades"></table>
     </div>
 
