@@ -32,5 +32,6 @@ def datatable_api(request):
         dct["title"].append(item.title)
         dct["published_date"].append(item.published_date)
         dct["views_count"].append(item.views_count)
+
     return JsonResponse(dct)
 
