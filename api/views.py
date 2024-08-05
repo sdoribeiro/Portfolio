@@ -18,3 +18,6 @@ def totalViews(request):
         dct["data"].append(item.views)
 
     return JsonResponse(dct)
+
+def datatable_api(request):
+    return JsonResponse ({})
