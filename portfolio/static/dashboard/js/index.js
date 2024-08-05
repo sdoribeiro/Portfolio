@@ -96,5 +96,5 @@ const dataTable = new simpleDatatables.DataTable("#datatable",  {
 fetch('/api/datatable-api')
 .then (res => res.json())
 .then (data =>{
-    dataTable.rows.add(data.data)
+    dataTable.insert(data.data)
 })
