@@ -20,6 +20,7 @@ def totalViews(request):
     return JsonResponse(dct)
 
 def datatable_api(request):
+    
     queryset= MostWatchedVideos.objects.all()
 
     dct = {
